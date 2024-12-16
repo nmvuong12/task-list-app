@@ -24,17 +24,31 @@
             <textarea name="long_description" rows="4" cols="70" class="form-control">{{ $task->long_description }}</textarea>
             <br>
 
-            @if ($task->completed == 1)
+            <!-- @if ($task->completed == 1)
                 <p class="text-success"><strong>Trạng thái: Hoàn thành</strong></p>
             @else
                 <p class="text-danger"><strong>Trạng thái: Chưa hoàn thành</strong></p>
-            @endif
-            <label for="create_at"><strong>Ngày tạo: </strong></label>
-            <input type="date" class="form-control" id="create_at" name="create_at" placeholder="Nhập ngày đăng" value="{{ old('create_at', $task->created_at ? \Carbon\Carbon::parse($task->created_at)->format('Y-m-d') : '') }}">
+            @endif -->
+            <p><strong>Trạng thái: </strong></p>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="0" {{ $task->completed == 0 ? 'checked' : '' }}>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Chưa hoàn thành
+                </label>
+                </div>
+                <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="1"{{ $task->completed == 1 ? 'checked' : '' }}>
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Đã hoàn thành
+                </label>
+            </div>
+
+            <label for="created_at"><strong>Ngày tạo: </strong></label>
+            <input type="date" class="form-control" id="created_at" name="created_at" value="{{ old('created_at', $task->created_at ? \Carbon\Carbon::parse($task->created_at)->format('Y-m-d') : '') }}">
             <br>
 
-            <label for="create_at"><strong>Ngày cập nhật: </strong></label>
-            <input type="date" class="form-control" id="create_at" name="create_at" placeholder="Nhập ngày đăng">
+            <label for="updated_at"><strong>Ngày cập nhật: </strong></label>
+            <input type="date" class="form-control" id="updated_at" name="updated_at" value="{{ old('updated_at', $task->updated_at ? \Carbon\Carbon::parse($task->updated_at)->format('Y-m-d') : '') }}">
             <br>
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-success me-2">Update</button>

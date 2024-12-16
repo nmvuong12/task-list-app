@@ -44,7 +44,11 @@ class TaskController extends Controller
         // $task->description = $request->description;
         // $task->save(); //lưu vào database
         //hoặc lấy tất cả
-        $task = Task::create($request->all());
+        $task = Task::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'long_description' => $request->long_description
+        ]);
         return redirect()->route("tasks.index")->with("success","");
 
     }
@@ -75,8 +79,16 @@ class TaskController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $task = new Task();
         $task = Task::findOrFail( $id);
-        $task->update($request->all());
+        $task->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'long_description' => $request->long_description,
+            'completed'=> $request->input('flexRadioDefault'),
+            'created_at'=> $request->created_at,
+            'updated_at'=> $request->updated_at
+        ]);
         return redirect()->route("tasks.index")->with("success","");
     }
 
