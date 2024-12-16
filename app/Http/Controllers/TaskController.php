@@ -13,8 +13,8 @@ class TaskController extends Controller
     public function index()
     {
         //Lấy dữ liệu: có 3 cách
-        $tasks = Task::orderBy('created_at', 'desc')->get();
-
+        //$tasks = Task::orderBy('created_at', 'desc')->get();
+        $tasks = Task::all();
         //dd($tasks); //để test dữ liệu
 
         //Render ra view: có 3 cách
@@ -79,7 +79,7 @@ class TaskController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $task = new Task();
+        //$task = new Task();
         $task = Task::findOrFail( $id);
         $task->update([
             'title' => $request->title,
@@ -98,6 +98,8 @@ class TaskController extends Controller
     public function destroy(string $id)
     {
         //
-        echo"destroy";
+        $task = Task::findOrFail( $id);
+        $task->delete();
+        return redirect()->route("tasks.index")->with("success","");
     }
 }

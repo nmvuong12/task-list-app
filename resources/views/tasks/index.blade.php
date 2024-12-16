@@ -333,12 +333,37 @@ $(document).ready(function(){
                         <td>{{$task->created_at}}</td>
                         <td>{{$task->updated_at}}</td>
 						<td>
-                            <a href="{{route('tasks.show', ['task' => $task->id])}}" class="show"><i class="material-icons" data-toggle="tooltip" title="Show">visibility</i></a>
-							<a href="{{route('tasks.edit', ['task' => $task->id])}}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            <a href="{{route('tasks.show', ['task' => $task->id])}}" class="show"><i class="material-icons" title="Show">visibility</i></a>
+							<a href="{{route('tasks.edit', ['task' => $task->id])}}" class="edit"><i class="material-icons" title="Edit">&#xE254;</i></a>
+							<a href="{{route('tasks.destroy', ['task' => $task->id])}}" class="delete" data-toggle="modal" data-target="#deleteModal{{$task->id}}"><i class="material-icons" title="Delete">&#xE872;</i></a>		
 						</td>
-					</tr>
-                    @endforeach
+					</tr>    
+					              
+					<div id="deleteModal{{$task->id}}" class="modal fade">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form action="{{route('tasks.destroy', ['task' => $task->id])}}" method="POST">
+									@csrf
+									@method ('DELETE')
+									<input type="hidden" name="id" id="id" value="{{$task->id}}">
+									<div class="modal-header">						
+										<h4 class="modal-title">Delete Task</h4>
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									</div>
+									<div class="modal-body">					
+										<p>Bạn có chắc chắn xóa bỏ nhiệm vụ:</p>
+										<p>{{$task->id}}</p>
+										<p class="text-warning"><small>Hành động không thể hoàn tác</small></p>
+									</div>
+									<div class="modal-footer">
+										<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+										<input type="submit" class="btn btn-danger" value="Delete">
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					@endforeach
 				</tbody>
 			</table>
 			<div class="clearfix">
@@ -357,25 +382,6 @@ $(document).ready(function(){
 	</div>        
 </div>
 <!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">						
-					<h4 class="modal-title">Delete Task</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">					
-					<p>Bạn có chắc chắn xóa bỏ nhiệm vụ?</p>
-					<p class="text-warning"><small>Hành động không thể hoàn tác</small></p>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Delete">
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
+
 </body>
 </html>
